@@ -1,0 +1,12 @@
+"""Составить генератор (yield), который преобразует все буквенные символы в
+заглавные."""
+
+def uppercase_generator(text):
+    for char in text:
+        yield char.upper() if char.isalpha() else char
+
+text = "Hello world!"
+result = ''.join(uppercase_generator(text))
+
+print(f"Исходная строка: {text}")
+print(f"Результат: {result}")
