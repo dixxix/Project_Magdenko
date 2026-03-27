@@ -1,5 +1,5 @@
 """Составить генератор (yield), который преобразует все буквенные символы в
-заглавные.v"""
+заглавные."""
 def uppercase_generator(text):
     for char in text:
         yield char.upper() if char.isalpha() else char
