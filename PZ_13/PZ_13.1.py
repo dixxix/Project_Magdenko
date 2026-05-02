@@ -3,24 +3,13 @@
 import re
 with open("Dostoevsky.txt", 'r', encoding='utf-8') as f:
     text = f.read()
-works_patterns = [
-    r'Преступление и наказание',
-    r'Идиот',
-    r'Бесы',
-    r'Братья Карамазовы',
-    r'Подросток',
-    r'Униженные и оскорблённые',
-    r'Игрок',
-    r'Записки из мертвого дома',
-    r'Записки из подполья',
-    r'Двойник',
-    r'Бедные люди',
-    r'Белые ночи'
-]
-pattern_str = '|'.join([re.escape(w) for w in works_patterns])
+pattern_str = r"Преступление и наказание|Идиот|Бесы|Братья Карамазовы|Подросток|Униженные и оскорблённые|Игрок|Записки из мертвого дома|Записки из подполья|Двойник|Бедные люди|Белые ночи"
 p = re.compile(pattern_str)
 found = p.findall(text)
-unique_works = set(found)
+unique_works = []
+for work in found:
+    if work not in unique_works:
+        unique_works.append(work)
 print(f"Найдено произведений: {len(unique_works)}")
-for i, work in enumerate(sorted(unique_works), 1):
+for i, work in enumerate(unique_works, 1):
     print(f"{i}. {work}")
