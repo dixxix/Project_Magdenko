@@ -30,20 +30,20 @@ def check_odd_numbers():
 root = tk.Tk()
 root.title("ПЗ №14, Задание 2 - Проверка нечетности")
 root.geometry("350x250")
-root.configure(bg="#f0f0f0")
+root.configure(bg="#e7a9e0")
 
-header_label = tk.Label(root, text="Проверка высказывания:", font=("Arial", 12, "bold"), bg="#f0f0f0")
+header_label = tk.Label(root, text="Проверка высказывания:", font=("Arial", 12, "bold"), bg="#e7a9e0")
 header_label.pack(pady=10)
-statement_label = tk.Label(root, text="«Каждое из чисел А и В нечетное»", font=("Arial", 10), bg="#f0f0f0", fg="#555")
+statement_label = tk.Label(root, text="«Каждое из чисел А и В нечетное»", font=("Arial", 10), bg="#e7a9e0", fg="#555")
 statement_label.pack(pady=(0, 15))
-input_frame = tk.Frame(root, bg="#f0f0f0")
+input_frame = tk.Frame(root, bg="#e7a9e0")
 input_frame.pack(fill='x', padx=20)
 
-tk.Label(input_frame, text="Число A:", font=("Arial", 11), bg="#f0f0f0").pack(side='left', padx=5)
+tk.Label(input_frame, text="Число A:", font=("Arial", 11), bg="#e7a9e0").pack(side='left', padx=5)
 entry_a = tk.Entry(input_frame, width=10, font=("Arial", 11), bd=1, relief='solid')
 entry_a.pack(side='left', padx=5)
 
-tk.Label(input_frame, text="Число B:", font=("Arial", 11), bg="#f0f0f0").pack(side='left', padx=(15, 5))
+tk.Label(input_frame, text="Число B:", font=("Arial", 11), bg="#e7a9e0").pack(side='left', padx=(15, 5))
 entry_b = tk.Entry(input_frame, width=10, font=("Arial", 11), bd=1, relief='solid')
 entry_b.pack(side='left', padx=5)
 
@@ -52,8 +52,8 @@ btn_check = tk.Button(root, text="Проверить", command=check_odd_numbers
                       padx=20, pady=5, cursor="hand2")
 btn_check.pack(pady=20)
 
-label_result = tk.Label(root, text="Результат будет здесь...", font=("Arial", 11),
-                        bg="#f0f0f0", wraplength=300, justify='center')
+label_result = tk.Label(root, text="Результат будет здесь", font=("Arial", 11),
+                        bg="#e7a9e0", wraplength=300, justify='center')
 label_result.pack(pady=10)
 
 btn_exit = tk.Button(root, text="Закрыть", command=root.destroy,
