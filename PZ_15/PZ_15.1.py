@@ -1,15 +1,17 @@
 import sqlite3 as sq
 import os
+from data import DATA
 
 DB = "orders_v8.db"
 
 def init_db():
     if os.path.exists(DB):
         os.remove(DB)
+
     try:
         with sq.connect(DB) as con:
             cur = con.cursor()
-            cur.execute("""CREATE TABLE Orders (
+            cur.execute("""CREATE TABLE IF NOT EXISTS Orders (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name TEXT NOT NULL,
                 customer TEXT,
@@ -17,21 +19,28 @@ def init_db():
                 term INTEGER CHECK(term BETWEEN 1 AND 10),
                 cost REAL
             )""")
-            data = [
-                ("Ноутбук", "ООО Ромашка", "2026-05-01", 3, 50000.0),
-                ("Мышь", "ИП Иванов", "2026-05-02", 1, 1500.0),
-                ("Монитор", "ООО Ромашка", "2026-05-03", 5, 22000.0),
-                ("Клавиатура", "ЗАО Вектор", "2026-05-04", 2, 3000.0),
-                ("Принтер", "ИП Петров", "2026-05-05", 7, 12000.0),
-                ("Кабель", "ООО Техно", "2026-05-06", 1, 500.0),
-                ("Роутер", "ЗАО Вектор", "2026-05-07", 3, 4500.0),
-                ("Флешка", "ИП Иванов", "2026-05-08", 1, 800.0),
-                ("Камера", "ООО Техно", "2026-05-09", 4, 2100.0),
-                ("Наушники", "ИП Сидоров", "2026-05-10", 2, 7500.0)
-            ]
-            cur.executemany("INSERT INTO Orders (name, customer, date, term, cost) VALUES (?, ?, ?, ?, ?)", data)
+
+            cur.executemany(
+                "INSERT INTO Orders (name, customer, date, term, cost) VALUES (?, ?, ?, ?, ?)", DATA)
+            print("База данных успешно создана и заполнена.")
     except sq.Error as e:
         print(f"Ошибка инициализации БД: {e}")
+
+
+def show_all():
+    try:
+        with sq.connect(DB) as con:
+            cur = con.cursor()
+            cur.execute("SELECT * FROM Orders")
+            rows = cur.fetchall()
+            if not rows:
+                print("Записей нет.")
+            else:
+                for row in rows:
+                    print(row)
+    except sq.Error as e:
+        print(f"Ошибка чтения: {e}")
+
 
 def search_by_customer():
     cust = input("Поиск по заказчику: ")
@@ -39,10 +48,15 @@ def search_by_customer():
         with sq.connect(DB) as con:
             cur = con.cursor()
             cur.execute("SELECT * FROM Orders WHERE customer LIKE ?", (f"%{cust}%",))
-            for row in cur:
-                print(row)
+            rows = cur.fetchall()
+            if not rows:
+                print("Ничего не найдено.")
+            else:
+                for row in rows:
+                    print(row)
     except sq.Error as e:
         print(f"Ошибка поиска: {e}")
+
 
 def search_by_product():
     product = input("Поиск по товару: ")
@@ -50,10 +64,15 @@ def search_by_product():
         with sq.connect(DB) as con:
             cur = con.cursor()
             cur.execute("SELECT * FROM Orders WHERE name LIKE ?", (f"%{product}%",))
-            for row in cur:
-                print(row)
+            rows = cur.fetchall()
+            if not rows:
+                print("Ничего не найдено.")
+            else:
+                for row in rows:
+                    print(row)
     except sq.Error as e:
         print(f"Ошибка поиска: {e}")
+
 
 def search_by_date():
     date = input("Поиск по дате (ГГГГ-ММ-ДД): ")
@@ -61,10 +80,15 @@ def search_by_date():
         with sq.connect(DB) as con:
             cur = con.cursor()
             cur.execute("SELECT * FROM Orders WHERE date = ?", (date,))
-            for row in cur:
-                print(row)
+            rows = cur.fetchall()
+            if not rows:
+                print("Ничего не найдено.")
+            else:
+                for row in rows:
+                    print(row)
     except sq.Error as e:
         print(f"Ошибка поиска: {e}")
+
 
 def edit_cost():
     try:
@@ -78,6 +102,7 @@ def edit_cost():
         print("Ошибка ввода данных.")
     except sq.Error as e:
         print(f"Ошибка обновления: {e}")
+
 
 def edit_term():
     try:
@@ -95,6 +120,7 @@ def edit_term():
     except sq.Error as e:
         print(f"Ошибка обновления: {e}")
 
+
 def edit_customer():
     try:
         pid = int(input("ID товара: "))
@@ -108,6 +134,7 @@ def edit_customer():
     except sq.Error as e:
         print(f"Ошибка обновления: {e}")
 
+
 def delete_by_term():
     try:
         term = int(input("Удалить заказы со сроком (дней): "))
@@ -119,6 +146,7 @@ def delete_by_term():
         print("Ошибка ввода данных.")
     except sq.Error as e:
         print(f"Ошибка удаления: {e}")
+
 
 def delete_by_id():
     try:
@@ -132,6 +160,7 @@ def delete_by_id():
     except sq.Error as e:
         print(f"Ошибка удаления: {e}")
 
+
 def delete_by_customer():
     cust = input("Удалить заказы заказчика: ")
     try:
@@ -141,30 +170,26 @@ def delete_by_customer():
             print(f"Удалено записей: {cur.rowcount}")
     except sq.Error as e:
         print(f"Ошибка удаления: {e}")
-
 init_db()
-while True:
-    print("МЕНЮ ")
-    print("1-Показать все заказы")
-    print("2-Поиск по заказчику")
-    print("3-Поиск по товару")
-    print("4-Поиск по дате")
-    print("5-Изменить цену")
-    print("6-Изменить срок")
-    print("7-Изменить заказчика")
-    print("8-Удалить по сроку")
-    print("9-Удалить по ID")
-    print("10-Удалить по заказчику")
-    print("0-Выход")
 
-    cmd = input("Выберите:")
+while True:
+    print("МЕНЮ")
+    print("1 - Показать все заказы")
+    print("2 - Поиск по заказчику")
+    print("3 - Поиск по товару")
+    print("4 - Поиск по дате")
+    print("5 - Изменить цену")
+    print("6 - Изменить срок")
+    print("7 - Изменить заказчика")
+    print("8 - Удалить по сроку")
+    print("9 - Удалить по ID")
+    print("10 - Удалить по заказчику")
+    print("0 - Выход")
+
+    cmd = input("Выберите действие: ")
+
     if cmd == '1':
-        try:
-            with sq.connect(DB) as con:
-                for row in con.cursor().execute("SELECT * FROM Orders"):
-                    print(row)
-        except sq.Error as e:
-            print(f"Ошибка чтения: {e}")
+        show_all()
     elif cmd == '2':
         search_by_customer()
     elif cmd == '3':
@@ -185,3 +210,5 @@ while True:
         delete_by_customer()
     elif cmd == '0':
         break
+    else:
+        print("Неверная команда.")
