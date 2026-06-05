@@ -28,8 +28,8 @@ def check_odd_numbers():
     except ValueError:
         label_result.config(text="Ошибка: Введите целые числа!", fg="red")
 root = tk.Tk()
-root.title("ПЗ №14, Задание 2 - Проверка нечетности")
-root.geometry("350x250")
+root.title("ПЗ №14 Задание 2")
+root.geometry("350x300")
 root.configure(bg="#e7a9e0")
 
 header_label = tk.Label(root, text="Проверка высказывания:", font=("Arial", 12, "bold"), bg="#e7a9e0")
