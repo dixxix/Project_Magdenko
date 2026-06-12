@@ -1,3 +1,7 @@
+"""Приложение ЗАКАЗЫ ТОВАРОВ для автоматизированного контроля заказов торговой фирмы.
+Таблица Заказы должна содержать информацию о товарах со следующей структурой записи:
+Код товара, Наименование товара, Заказчик (наименование организации, возможны повторяющиеся значения),
+ Дата заказа, Срок исполнения (от 1 до 10 дней), Стоимость заказа."""
 import sqlite3 as sq
 import os
 from data import DATA
@@ -7,7 +11,6 @@ DB = "orders_v8.db"
 def init_db():
     if os.path.exists(DB):
         os.remove(DB)
-
     try:
         with sq.connect(DB) as con:
             cur = con.cursor()
@@ -26,7 +29,6 @@ def init_db():
     except sq.Error as e:
         print(f"Ошибка инициализации БД: {e}")
 
-
 def show_all():
     try:
         with sq.connect(DB) as con:
@@ -40,7 +42,6 @@ def show_all():
                     print(row)
     except sq.Error as e:
         print(f"Ошибка чтения: {e}")
-
 
 def search_by_customer():
     cust = input("Поиск по заказчику: ")
@@ -57,7 +58,6 @@ def search_by_customer():
     except sq.Error as e:
         print(f"Ошибка поиска: {e}")
 
-
 def search_by_product():
     product = input("Поиск по товару: ")
     try:
@@ -72,7 +72,6 @@ def search_by_product():
                     print(row)
     except sq.Error as e:
         print(f"Ошибка поиска: {e}")
-
 
 def search_by_date():
     date = input("Поиск по дате (ГГГГ-ММ-ДД): ")
@@ -89,7 +88,6 @@ def search_by_date():
     except sq.Error as e:
         print(f"Ошибка поиска: {e}")
 
-
 def edit_cost():
     try:
         pid = int(input("ID товара: "))
@@ -102,7 +100,6 @@ def edit_cost():
         print("Ошибка ввода данных.")
     except sq.Error as e:
         print(f"Ошибка обновления: {e}")
-
 
 def edit_term():
     try:
@@ -120,7 +117,6 @@ def edit_term():
     except sq.Error as e:
         print(f"Ошибка обновления: {e}")
 
-
 def edit_customer():
     try:
         pid = int(input("ID товара: "))
@@ -134,7 +130,6 @@ def edit_customer():
     except sq.Error as e:
         print(f"Ошибка обновления: {e}")
 
-
 def delete_by_term():
     try:
         term = int(input("Удалить заказы со сроком (дней): "))
@@ -147,7 +142,6 @@ def delete_by_term():
     except sq.Error as e:
         print(f"Ошибка удаления: {e}")
 
-
 def delete_by_id():
     try:
         pid = int(input("ID товара для удаления: "))
@@ -159,7 +153,6 @@ def delete_by_id():
         print("Ошибка ввода данных.")
     except sq.Error as e:
         print(f"Ошибка удаления: {e}")
-
 
 def delete_by_customer():
     cust = input("Удалить заказы заказчика: ")
@@ -187,7 +180,6 @@ while True:
     print("0 - Выход")
 
     cmd = input("Выберите действие: ")
-
     if cmd == '1':
         show_all()
     elif cmd == '2':
