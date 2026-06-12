@@ -25,3 +25,33 @@ def main():
     except ValueError:
         print("Ошибка: введите корректные целые числа")
 main()
+
+def sum_digits(N):
+    total = 0
+    while N > 0:
+        total += N % 10
+        N //= 10
+    return total
+user_input = input("Введите число: ")
+N = int(user_input)
+if N < 10:
+    print("Число должно состоять минимум из 2 цифр")
+else:
+    result = sum_digits(N)
+    print("Сумма цифр:", result)
+
+N = int(input("Введите число: "))
+
+def calculate():
+    total = 0
+    counter = 1
+    while counter <= N:
+        total += 1 / counter
+        counter += 1
+    return total
+if N == 0:
+    print("На 0 делить нельзя")
+else:
+    result = calculate()
+    print(f"Ряд чисел: 1, 1/2, 1/3, ..., 1/{N}")
+    print(f"Сумма чисел ряда: {result}")
