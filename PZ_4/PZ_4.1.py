@@ -8,7 +8,7 @@ try:
     else:
         summa = 0
         for i in range(A, B + 1):
-            summa += i * i  # summa = summa + i * i
+            summa += i * i
         print(f"Сумма квадратов чисел от {A} до {B} = {summa}")
 
 except ValueError:
