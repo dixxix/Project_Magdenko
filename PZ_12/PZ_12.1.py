@@ -1,9 +1,10 @@
+"""1. В матрице элементы столбца N (N задать с клавиатуры) увеличить в два раза."""
 import random
 try:
     rows = int(input("Количество строк: "))
     cols = int(input("Количество столбцов: "))
     n = int(input("Столбец (с 0): "))
-    matrix = [[random.randint(1, 9) for _ in range(cols)] for _ in range(rows)]
+    matrix = [[random.randint(-1, 8) for _ in range(cols)] for _ in range(rows)]
     print("Исходная матрица:")
     for row in matrix:
         print(' '.join(map(str, row)))
