@@ -3,16 +3,20 @@
 # Найти длину отрезка в метрах.
 try:
     unit = int(input("Единица (1-дм, 2-км, 3-м, 4-мм, 5-см): "))
-    length = float(input("Введите длинну отрезка: "))
+    length = float(input("Длина: "))
 
-    factors = [0.1, 1000, 1, 0.001, 0.01]
-    names = ["дециметр", "километр", "метр", "миллиметр", "сантиметр"]
-
-    if 1 <= unit <= 5:
-        meters = length * factors[unit - 1]
-        print(f"{length} {names[unit - 1]} = {meters} м")
+    if unit == 1:
+        print(f"{length} дм = {length / 10} м")
+    elif unit == 2:
+        print(f"{length} км = {length * 1000} м")
+    elif unit == 3:
+        print(f"{length} м = {length} м")
+    elif unit == 4:
+        print(f"{length} мм = {length / 1000} м")
+    elif unit == 5:
+        print(f"{length} см = {length / 100} м")
     else:
-        print("Ошибка диапазона!")
+        print("Ошибка! Введите число от 1 до 5")
 
 except ValueError:
-    print("Ошибка ввода!")
+    print("Ошибка ввода чисел!")
