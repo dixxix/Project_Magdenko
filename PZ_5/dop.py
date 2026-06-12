@@ -21,7 +21,7 @@ def main():
         s2 = sum_digits(num2)
         s3 = sum_digits(num3)
         max_sum = max(s1, s2, s3)
-        print(f"\nСуммы цифр: {s1}, {s2}, {s3}")
+        print(f"Суммы цифр: {s1}, {s2}, {s3}")
         if s1 == max_sum:
             print("У первого числа самая большая сумма цифр")
         if s2 == max_sum:
